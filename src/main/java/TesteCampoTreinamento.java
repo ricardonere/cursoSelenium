@@ -1,4 +1,5 @@
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
@@ -95,12 +96,45 @@ public class TesteCampoTreinamento {
         combo.selectByVisibleText("Natacao");
         combo.selectByVisibleText("Corrida");
         combo.selectByVisibleText("O que eh esporte?");
-        List <WebElement> allSelectedOptions = combo.getAllSelectedOptions();
-        Assert.assertEquals(3,allSelectedOptions.size());
+        List<WebElement> allSelectedOptions = combo.getAllSelectedOptions();
+        Assert.assertEquals(3, allSelectedOptions.size());
 
         combo.deselectByVisibleText("Corrida");
-       allSelectedOptions = combo.getAllSelectedOptions();
-        Assert.assertEquals(2,allSelectedOptions.size());
+        allSelectedOptions = combo.getAllSelectedOptions();
+        Assert.assertEquals(2, allSelectedOptions.size());
         driver.quit();
     }
+
+    @Test
+    public void deveInteragirCombotoes() {
+        WebDriver driver = new FirefoxDriver();
+        driver.manage().window().setSize(new Dimension(1200, 765));
+        driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+        driver.findElement(By.id("buttonSimple")).click();
+        WebElement botao = driver.findElement(By.id("buttonSimple"));
+        botao.click();
+        Assert.assertEquals("Obrigado!", botao.getAttribute("value"));
+        driver.quit();
+    }
+
+    @Test
+    public void deveInteragirComLinks() {
+        WebDriver driver = new FirefoxDriver();
+        driver.manage().window().setSize(new Dimension(1200, 765));
+        driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+        driver.findElement(By.linkText("Voltar")).click();
+        Assert.assertEquals("Voltou!", driver.findElement(By.id("resultado")).getText());
+    }
+
+    @Test
+    public void deveBuscarTextosNaPagina() {//chamada do metodo-assinatura
+        WebDriver driver = new FirefoxDriver();//tipo de driver
+        driver.manage().window().setSize(new Dimension(1200, 765));//dimensão da tela
+        driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");//Acesso ao link-site
+ //System.out.println(driver.findElement(By.tagName("body")).getText());//traz o texto visivel da tela
+        //Assert.assertTrue(driver.findElement(By.tagName("body")).getText().contains("Campo de Treinamento"));//checar se o titulo esta presente
+        //Assert.assertEquals("Campo de Treinamento",driver.findElement(By.tagName("h3")).getText());
+        Assert.assertEquals("Cuidado onde clica, muitas armadilhas...",driver.findElement(By.className("facilAchar")).getText());
+       driver.quit();
+}
 }
