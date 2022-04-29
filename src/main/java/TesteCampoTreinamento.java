@@ -114,7 +114,7 @@ public class TesteCampoTreinamento {
         WebElement botao = driver.findElement(By.id("buttonSimple"));
         botao.click();
         Assert.assertEquals("Obrigado!", botao.getAttribute("value"));
-        driver.quit();
+        //driver.quit();
     }
 
     @Test
