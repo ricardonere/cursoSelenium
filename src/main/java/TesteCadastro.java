@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.Select;
 import java.util.List;
 
 public class TesteCadastro {
+    private DSL dsl;
     @Test
     public void deveInteragirComAlertPrompt() {
         WebDriver driver = new FirefoxDriver();
