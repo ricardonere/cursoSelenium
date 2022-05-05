@@ -14,12 +14,14 @@ import java.util.List;
 public class TesteCadastro {
     private WebDriver driver;
     private DSL dsl;
+    private CampoTreinamentoPage page;
     @Before
     public void inicializa() {
         driver = new FirefoxDriver();
         driver.manage().window().setSize(new Dimension(1200, 765));
         driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
         dsl = new DSL(driver);
+        page = new CampoTreinamentoPage(driver);
     }
 
     @After
@@ -28,13 +30,13 @@ public class TesteCadastro {
     }
     @Test
     public void deveRealizarCadastroComSucesso() {
-        dsl.esscreve("elementosForm:nome", "Ricardo");
-        dsl.esscreve("elementosForm:sobrenome", "Nere");
-        dsl.clicarRadio("elementosForm:sexo:0");
-        dsl.clicarRadio("elementosForm:comidaFavorita:2");
+        page.setNome("Ricardo");
+        page.setSobrenome("Nere");
+        page.setSexoMascuino();
+        page.setComidaPizza();
+        page.setEscolaridade("Mestrado");
+        page.setEsportes("Natacao");
 
-        dsl.selecionarCombo("elementosForm:escolaridade", "Mestrado");
-        dsl.selecionarCombo("elementosForm:esportes", "Natacao");
         dsl.clicarBotao("elementosForm:cadastrar");
 
         Assert.assertTrue(dsl.obterTexto("resultado").startsWith("Cadastrado!"));
