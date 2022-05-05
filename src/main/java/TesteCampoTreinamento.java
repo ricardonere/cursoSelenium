@@ -1,7 +1,4 @@
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
@@ -17,27 +14,28 @@ public class TesteCampoTreinamento {
     private DSL dsl;
 
     @Before
-    public void inicializa(){
+    public void inicializa() {
         driver = new FirefoxDriver();
         driver.manage().window().setSize(new Dimension(1200, 765));
         driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
-        dsl = new DSL (driver);
+        dsl = new DSL(driver);
     }
 
+    @After
+    public void finaliza() {
+        driver.quit();
+    }
 
     @Test
     public void testeTextField() {
-
-        System.getProperty("user.dir");
         dsl.esscreve("elementosForm:nome", "Teste de escrita");
         Assert.assertEquals("Teste de escrita", dsl.obterValorCampo("elementosForm:nome"));
     }
 
     @Test
     public void deveInteragirComOTextArea() {
-        dsl.esscreve("elementosForm:sugestoes", "teste");
-        driver.findElement(By.id("elementosForm:sugestoes")).sendKeys("teste");
-        Assert.assertEquals("teste", dsl.obterValorCampo("elementosForm:sugestoes"));
+        dsl.esscreve("elementosForm:sugestoes", "teste\n\naasldjdlks\nUltima linha");
+        Assert.assertEquals("teste\n\naasldjdlks\nUltima linha", dsl.obterValorCampo("elementosForm:sugestoes"));
     }
 
     @Test
@@ -58,7 +56,6 @@ public class TesteCampoTreinamento {
         dsl.selecionarCombo("elementosForm:escolaridade", "2o grau completo");
         Assert.assertEquals("2o grau completo", dsl.obterValorCombo("elementosForm:escolaridade"));
         //Assert.assertTrue(driver.findElement(By.id("elementosForm:comidaFavorita:2")).isSelected());
-        driver.quit();
     }
 
     @Test
@@ -91,7 +88,6 @@ public class TesteCampoTreinamento {
         combo.deselectByVisibleText("Corrida");
         allSelectedOptions = combo.getAllSelectedOptions();
         Assert.assertEquals(2, allSelectedOptions.size());
-        driver.quit();
     }
 
     @Test
@@ -105,7 +101,7 @@ public class TesteCampoTreinamento {
 
     @Test
     public void deveInteragirComLinks() {
-       dsl.clicarLink("Voltar");
+        dsl.clicarLink("Voltar");
         Assert.assertEquals("Voltou!", dsl.obterTexto("resultado"));
     }
 
@@ -114,10 +110,10 @@ public class TesteCampoTreinamento {
 //        WebDriver driver = new FirefoxDriver();//tipo de driver
 //        driver.manage().window().setSize(new Dimension(1200, 765));//dimensão da tela
 //        driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");//Acesso ao link-site
- //System.out.println(driver.findElement(By.tagName("body")).getText());//traz o texto visivel da tela
+        //System.out.println(driver.findElement(By.tagName("body")).getText());//traz o texto visivel da tela
         //Assert.assertTrue(driver.findElement(By.tagName("body")).getText().contains("Campo de Treinamento"));//checar se o titulo esta presente
-        Assert.assertEquals("Campo de Treinamento",dsl.obterTexto(By.tagName("h3")));
+        Assert.assertEquals("Campo de Treinamento", dsl.obterTexto(By.tagName("h3")));
         Assert.assertEquals("Cuidado onde clica, muitas armadilhas...",
-       dsl.obterTexto(By.className("facilAchar")));
-}
+                dsl.obterTexto(By.className("facilAchar")));
+    }
 }

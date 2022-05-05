@@ -1,4 +1,6 @@
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
@@ -10,13 +12,22 @@ import org.openqa.selenium.support.ui.Select;
 import java.util.List;
 
 public class TesteCadastro {
+    private WebDriver driver;
     private DSL dsl;
-    @Test
-    public void deveRealizarCadastroComSucesso() {
-        WebDriver driver = new FirefoxDriver();
+    @Before
+    public void inicializa() {
+        driver = new FirefoxDriver();
         driver.manage().window().setSize(new Dimension(1200, 765));
         driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
-        dsl = new DSL (driver);
+        dsl = new DSL(driver);
+    }
+
+    @After
+    public void finaliza() {
+        driver.quit();
+    }
+    @Test
+    public void deveRealizarCadastroComSucesso() {
         dsl.esscreve("elementosForm:nome", "Ricardo");
         dsl.esscreve("elementosForm:sobrenome", "Nere");
         dsl.clicarRadio("elementosForm:sexo:0");
@@ -33,6 +44,6 @@ public class TesteCadastro {
         Assert.assertEquals("Comida: Pizza", dsl.obterTexto(By.id("descComida")));
         Assert.assertEquals("Escolaridade: mestrado", dsl.obterTexto("descEscolaridade"));
         Assert.assertEquals("Esportes: Natacao", dsl.obterTexto("descEsportes"));
-        driver.quit();
+
     }
 }
