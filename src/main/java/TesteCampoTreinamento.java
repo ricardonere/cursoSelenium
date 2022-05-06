@@ -84,7 +84,6 @@ public class TesteCampoTreinamento {
         Select combo = new Select(element);
         List<WebElement> allSelectedOptions = combo.getAllSelectedOptions();
         Assert.assertEquals(3, allSelectedOptions.size());
-
         combo.deselectByVisibleText("Corrida");
         allSelectedOptions = combo.getAllSelectedOptions();
         Assert.assertEquals(2, allSelectedOptions.size());

@@ -4,6 +4,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
 public class DSL {
+    public String alertaObterTextoEAceita;
     private WebDriver driver;
 
     public DSL(WebDriver driver) {
@@ -16,14 +17,17 @@ public class DSL {
     }
 
     public String obterValorCampo(String id_campo) {
+
         return driver.findElement(By.id(id_campo)).getAttribute("value");
     }
 
     public void clicarRadio(String id) {
+
         driver.findElement(By.id(id)).click();
     }
 
     public boolean isRadioMarcado(String id) {
+
         return driver.findElement(By.id(id)).isSelected();
     }
 
@@ -46,10 +50,16 @@ public class DSL {
     public void clicarLink(String link) {
         driver.findElement(By.linkText(link)).click();
     }
+
     public String obterTexto(By by) {
         return driver.findElement(by).getText();
     }
-    public String obterTexto(String id){
+
+    public String obterTexto(String id) {
         return obterTexto(By.id(id));
+    }
+
+    public String obterTexto() {
+        return null;
     }
 }
